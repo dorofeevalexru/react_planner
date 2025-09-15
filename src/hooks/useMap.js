@@ -9,14 +9,14 @@ export const useMap = () => {
   const [map, setMap] = useState(null);
 
   const initMap = useCallback((mapElement) => {
-    // Создаем базовый слой OSM
+    // базовый слой OSM
     const osmLayer = new Tile({
       source: new OSM(),
       zIndex: -1
     });
     osmLayer.set('isBaseLayer', true);
 
-    // Создаем элементы управления с правильными классами
+    // элементы управления с правильными классами
     const zoomControl = new Zoom({
       className: 'custom-ol-zoom'
     });
@@ -27,10 +27,10 @@ export const useMap = () => {
     
     const scaleLineControl = new ScaleLine({
       className: 'custom-ol-scale-line',
-      target: document.getElementById('scale-line-container') // Указываем конкретный контейнер
+      target: document.getElementById('scale-line-container') // Указание на конкретный контейнер
     });
 
-    // Создаем карту
+    // Создание карты
     const mapInstance = new Map({
       target: mapElement,
       layers: [osmLayer],
@@ -41,7 +41,7 @@ export const useMap = () => {
       controls: [zoomControl, rotateControl, scaleLineControl]
     });
 
-    // Добавляем обработчик для обновления размера при изменении размера окна
+    // обработчик для обновления размера при изменении размера окна
     const handleResize = () => {
       mapInstance.updateSize();
     };
