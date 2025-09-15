@@ -17,7 +17,7 @@ const LayerTree = ({ map, layerConfig }) => {
 
   const toggleLayerVisibility = (layerConfig, isVisible) => {
     console.log('Toggle layer:', layerConfig.name, isVisible);
-    // Здесь будет логика добавления/удаления слоев на карту
+    // Сюда логику добавления И удаления слоев на карту
   };
 
   const renderTreeNode = (node, level = 0) => {
@@ -37,7 +37,7 @@ const LayerTree = ({ map, layerConfig }) => {
             type="checkbox" 
             id={`group-${node.name}`}
             onChange={(e) => {
-              // Переключаем видимость всех дочерних элементов
+              // Переключение видимость всех дочерних элементов
               node.nodes.forEach(child => {
                 if (child.nodes) {
                   // Это подгруппа
