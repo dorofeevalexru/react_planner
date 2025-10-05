@@ -89,14 +89,14 @@ const BaseMapControl = ({ map }) => {
   const setBasemap = (id) => {
     if (!map) return;
 
-    // Удаляем старый базовый слой
+    // Удаление старый базовый слой
     map.getLayers().getArray().forEach(layer => {
       if (layer.get('isBaseLayer')) {
         map.removeLayer(layer);
       }
     });
 
-    // Добавляем новый базовый слой
+    // новый базовый слой
     if (baseLayers[id]) {
       const newLayer = baseLayers[id].layer;
       newLayer.set('isBaseLayer', true);
