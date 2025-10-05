@@ -12,7 +12,7 @@ const Footer = () => {
         </div>
         <div className="footer-logo">
           <img src="s_guap_w.svg" alt="Логотип ГУАП" width="120" />
-          <div className="copyright">© 2024 Все права защищены</div>
+          <div className="copyright">© 2025 Все права защищены</div>
         </div>
       </div>
     </footer>

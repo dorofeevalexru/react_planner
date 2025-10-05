@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
+// hooks/useMap.js
+import { useState, useCallback } from 'react';
 import { Map, View } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import { Zoom, Rotate, ScaleLine } from 'ol/control';
@@ -9,28 +10,11 @@ export const useMap = () => {
   const [map, setMap] = useState(null);
 
   const initMap = useCallback((mapElement) => {
-    // Создаем базовый слой OSM
     const osmLayer = new Tile({
       source: new OSM(),
       zIndex: -1
     });
-    osmLayer.set('isBaseLayer', true);
 
-    // Создаем элементы управления с правильными классами
-    const zoomControl = new Zoom({
-      className: 'custom-ol-zoom'
-    });
-    
-    const rotateControl = new Rotate({
-      className: 'custom-ol-rotate'
-    });
-    
-    const scaleLineControl = new ScaleLine({
-      className: 'custom-ol-scale-line',
-      target: document.getElementById('scale-line-container') // Указываем конкретный контейнер
-    });
-
-    // Создаем карту
     const mapInstance = new Map({
       target: mapElement,
       layers: [osmLayer],
@@ -38,17 +22,24 @@ export const useMap = () => {
         center: fromLonLat([30.19, 59.95]),
         zoom: 4
       }),
-      controls: [zoomControl, rotateControl, scaleLineControl]
+      controls: [] 
     });
 
-    // Добавляем обработчик для обновления размера при изменении размера окна
+   
+    mapInstance.addControl(new Zoom());
+    mapInstance.addControl(new Rotate());
+    
+    const scaleLineControl = new ScaleLine({
+      target: document.getElementById('scale-line-container')
+    });
+    mapInstance.addControl(scaleLineControl);
+
     const handleResize = () => {
       mapInstance.updateSize();
     };
     
     window.addEventListener('resize', handleResize);
     
-    // Очистка при размонтировании
     mapInstance.on('unmount', () => {
       window.removeEventListener('resize', handleResize);
     });
