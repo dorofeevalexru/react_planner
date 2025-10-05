@@ -1,4 +1,5 @@
 .map-info-control {
+    position: absolute;
     bottom: 20px;
     right: 20px;
     left: auto;
@@ -12,6 +13,7 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    z-index: 999 ;
 }
 
 .map-info-control:hover {
@@ -19,9 +21,7 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-.map-info-control ~ .map-info-control {
-    bottom: 3em;
-}
+
 
 .map-info-box {
     display: flex;

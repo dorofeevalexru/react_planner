@@ -7,6 +7,7 @@ const BaseMapControl = ({ map }) => {
   const [currentLayer, setCurrentLayer] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  console.log('Бэйзмэп рендер');
   const baseLayers = {
     0: {
       'name': 'Open Street Map',

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+// Sidebar.jsx
+import React, { useState, useEffect } from 'react';
 import LayerTree from '../LayerTree/LayerTree';
 import './Sidebar.css';
 
-const Sidebar = ({ map, layerConfig }) => {
+const Sidebar = ({ map, layerConfig, onStateChange }) => { // Добавляем onStateChange
   const [activeTab, setActiveTab] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -11,6 +12,29 @@ const Sidebar = ({ map, layerConfig }) => {
     { id: 'schedule', icon: 'fa-bars', title: 'Расписание приёма' },
     { id: 'local-settings', icon: 'fa-cog', title: 'Настройки' }
   ];
+
+  // Уведомляем родительский компонент об изменении состояния
+  useEffect(() => {
+    if (onStateChange) {
+      onStateChange(!isCollapsed);
+    }
+  }, [isCollapsed, onStateChange]);
+
+  // Обновляем размер карты при изменении состояния сайдбара
+  useEffect(() => {
+    if (map) {
+      const timer = setTimeout(() => {
+        map.updateSize();
+        map.getControls().forEach(control => {
+          if (control.changed) {
+            control.changed();
+          }
+        });
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isCollapsed, activeTab, map]);
 
   const handleTabClick = (tabId) => {
     if (activeTab === tabId) {
@@ -29,6 +53,7 @@ const Sidebar = ({ map, layerConfig }) => {
 
   return (
     <div className={`sidebar sidebar-left ${isCollapsed ? 'collapsed' : ''}`}>
+      {/* остальной код без изменений */}
       <div className="sidebar-tabs">
         {tabs.map(tab => (
           <div
